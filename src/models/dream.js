@@ -22,4 +22,8 @@ const dreamSchema = new mongoose.Schema({
 
 const Dream = mongoose.model("Dream", dreamSchema);
 
-module.exports = Dream;
+const dreamTypes = ["happy", "sad", "exciting", "scary"];
+
+// module.exports = dreamTypes;
+// module.exports = Dream;
+module.exports = { Dream, dreamTypes };

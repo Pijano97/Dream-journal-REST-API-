@@ -1,6 +1,12 @@
 const express = require("express");
 const router = new express.Router();
 const Dream = require("../models/dream");
+const dreamTypes = require("../models/dream");
+
+// Get all dream types
+router.get("/dreamTypes", (req, res) => {
+  res.status(200).send(dreamTypes);
+});
 
 // Create dream
 router.post("/dreams", async (req, res) => {
@@ -15,7 +21,7 @@ router.post("/dreams", async (req, res) => {
   }
 });
 
-// Read dream
+// Read dreams
 router.get("/dreams", async (req, res) => {
   try {
     const dream = await Dream.find({});
