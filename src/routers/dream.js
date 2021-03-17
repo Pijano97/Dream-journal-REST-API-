@@ -12,9 +12,10 @@ router.get("/dreamTypes", (req, res) => {
 // Create dream
 router.post("/dreams", async (req, res) => {
   const dream = new Dream(req.body);
-  logger.info("Create dream");
   try {
     await dream.save();
+    logger.info("Create dream", dream.id);
+
     res.status(201).send(dream);
   } catch (e) {
     res.status(400).send(e);
@@ -22,9 +23,8 @@ router.post("/dreams", async (req, res) => {
 });
 
 // Read dreams
-// GET /dreams?title="dream1"
 router.get("/dreams", async (req, res) => {
-  logger.info("Read Dreams");
+  logger.info("Get All Dreams");
   try {
     const { page = 1, limit = 3 } = req.query;
 
@@ -63,9 +63,9 @@ router.get("/dreams", async (req, res) => {
 
 // Update dream
 router.patch("/dreams/:id", async (req, res) => {
-  logger.info("Update Dreams");
-
   const _id = req.params.id;
+  logger.info("Update Dream", _id);
+
   //validation
   const updates = Object.keys(req.body);
   const allowedUpdates = ["title", "description", "dream", "date"];
@@ -99,9 +99,8 @@ router.patch("/dreams/:id", async (req, res) => {
 // Delete dream
 
 router.delete("/dreams/:id", async (req, res) => {
-  logger.info("Delete Dreams");
-
   const _id = req.params.id;
+  logger.info("Delete Dream", _id);
 
   try {
     const dream = await Dream.findByIdAndDelete(_id);

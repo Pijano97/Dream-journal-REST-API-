@@ -15,7 +15,7 @@
 1. Run `npm run dev`.
 2. Make a request to the `http://localhost:3000`
 
-### Api-endpoint
+### API-endpoint
 
 1. Get All dream types `GET /dreamTypes`.
 2. Create dream `POST /dreams`

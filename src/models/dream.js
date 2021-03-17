@@ -4,7 +4,6 @@ const dreamSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    // trim?
   },
   description: {
     type: String,
@@ -16,6 +15,8 @@ const dreamSchema = new mongoose.Schema({
   },
   dream: {
     type: String,
+    required: true,
+
     enum: ["happy", "sad", "exciting", "scary"],
   },
 });
