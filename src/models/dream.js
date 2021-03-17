@@ -11,9 +11,14 @@ const dreamSchema = new mongoose.Schema({
     required: true,
   },
   dream: {
+    required: false,
     happy: Boolean,
     sad: Boolean,
     exciting: Boolean,
     scary: Boolean,
   },
 });
+
+const Dream = mongoose.model("Dream", dreamSchema);
+
+module.exports = Dream;
