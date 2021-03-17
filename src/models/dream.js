@@ -10,12 +10,13 @@ const dreamSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: String,
+    require: true,
+  },
   dream: {
-    required: false,
-    happy: Boolean,
-    sad: Boolean,
-    exciting: Boolean,
-    scary: Boolean,
+    type: String,
+    enum: ["happy", "sad", "exciting", "scary"],
   },
 });
 
