@@ -1,7 +1,8 @@
 const express = require("express");
 const router = new express.Router();
-const Dream = require("../models/dream");
-const dreamTypes = require("../models/dream");
+// const Dream = require("../models/dream");
+// const dreamTypes = require("../models/dream");
+const { Dream = Dream, dreamTypes = dreamTypes } = require("../models/dream");
 
 // Get all dream types
 router.get("/dreamTypes", (req, res) => {
@@ -22,9 +23,32 @@ router.post("/dreams", async (req, res) => {
 });
 
 // Read dreams
+// GET /dreams?title="dream1"
 router.get("/dreams", async (req, res) => {
   try {
-    const dream = await Dream.find({});
+    const { page = 1, limit = 3 } = req.query;
+    // const title = req.query.title;
+    // const type = req.query.type;
+
+    const match = {};
+    match.title = req.query.title;
+    match.dream = req.query.type;
+
+    // if (req.query.title) {
+    // }
+
+    // if (req.query.type) {
+    // }
+
+    const dream = await Dream.find(match)
+      .populate("Dreams")
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+
+    // fix this
+    if (!dream) {
+      return res.status(404).send({ error: "Invalid query" });
+    }
     res.send(dream);
   } catch (e) {
     res.status(500).send();

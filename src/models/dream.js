@@ -20,7 +20,7 @@ const dreamSchema = new mongoose.Schema({
   },
 });
 
-const Dream = mongoose.model("Dream", dreamSchema);
+const Dream = mongoose.model("Dreams", dreamSchema);
 
 const dreamTypes = ["happy", "sad", "exciting", "scary"];
 
