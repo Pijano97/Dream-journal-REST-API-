@@ -1,8 +1,8 @@
 const express = require("express");
 const router = new express.Router();
-// const Dream = require("../models/dream");
-// const dreamTypes = require("../models/dream");
+
 const { Dream = Dream, dreamTypes = dreamTypes } = require("../models/dream");
+const logger = require("../logger");
 
 // Get all dream types
 router.get("/dreamTypes", (req, res) => {
@@ -12,8 +12,7 @@ router.get("/dreamTypes", (req, res) => {
 // Create dream
 router.post("/dreams", async (req, res) => {
   const dream = new Dream(req.body);
-
-  console.log(req.body);
+  logger.info("Create dream");
   try {
     await dream.save();
     res.status(201).send(dream);
@@ -25,20 +24,19 @@ router.post("/dreams", async (req, res) => {
 // Read dreams
 // GET /dreams?title="dream1"
 router.get("/dreams", async (req, res) => {
+  logger.info("Read Dreams");
   try {
     const { page = 1, limit = 3 } = req.query;
-    // const title = req.query.title;
-    // const type = req.query.type;
 
     const match = {};
-    match.title = req.query.title;
-    match.dream = req.query.type;
 
-    // if (req.query.title) {
-    // }
+    if (req.query.title) {
+      match.title = req.query.title;
+    }
 
-    // if (req.query.type) {
-    // }
+    if (req.query.type) {
+      match.dream = req.query.type;
+    }
 
     const dream = await Dream.find(match)
       .populate("Dreams")
@@ -57,6 +55,8 @@ router.get("/dreams", async (req, res) => {
 
 // Update dream
 router.patch("/dreams/:id", async (req, res) => {
+  logger.info("Update Dreams");
+
   const _id = req.params.id;
   //validation
   const updates = Object.keys(req.body);
@@ -91,6 +91,8 @@ router.patch("/dreams/:id", async (req, res) => {
 // Delete dream
 
 router.delete("/dreams/:id", async (req, res) => {
+  logger.info("Delete Dreams");
+
   const _id = req.params.id;
 
   try {
