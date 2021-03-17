@@ -37,6 +37,14 @@ router.get("/dreams", async (req, res) => {
     if (req.query.type) {
       match.dream = req.query.type;
     }
+    if (req.query.startDate && req.query.endDate) {
+      const queryDate = {
+        $gte: new Date(new Date(req.query.startDate).setHours(00, 00, 00)),
+        $lte: new Date(new Date(req.query.endDate).setHours(23, 59, 59)),
+      };
+
+      match.date = queryDate;
+    }
 
     const dream = await Dream.find(match)
       .populate("Dreams")
@@ -60,7 +68,7 @@ router.patch("/dreams/:id", async (req, res) => {
   const _id = req.params.id;
   //validation
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["title", "description", "dream"];
+  const allowedUpdates = ["title", "description", "dream", "date"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
