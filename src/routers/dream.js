@@ -25,11 +25,12 @@ router.get("/dreams", async (req, res) => {
   }
 });
 
+// Update dream
 router.patch("/dreams/:id", async (req, res) => {
   const _id = req.params.id;
   //validation
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["title", "description"];
+  const allowedUpdates = ["title", "description", "dream"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -54,6 +55,24 @@ router.patch("/dreams/:id", async (req, res) => {
     res.send(dream);
   } catch (e) {
     res.status(400).send(e);
+  }
+});
+
+// Delete dream
+
+router.delete("/dreams/:id", async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const dream = await Dream.findByIdAndDelete(_id);
+
+    if (!dream) {
+      return res.status(404).send();
+    }
+
+    res.status(200).send(dream);
+  } catch (e) {
+    res.status(500).send();
   }
 });
 
