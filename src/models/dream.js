@@ -16,7 +16,6 @@ const dreamSchema = new mongoose.Schema({
   dream: {
     type: String,
     required: true,
-
     enum: ["happy", "sad", "exciting", "scary"],
   },
 });
